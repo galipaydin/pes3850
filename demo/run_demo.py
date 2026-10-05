@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-PES 517 · Week 1 — build the opening demo from a video clip.
+PES 517 · Week 1 — pose estimation from a video clip.
 
-Produces the three files you show in class:
+Produces three files:
     <out>/demo_side_by_side.png   one frame, raw | skeleton
     <out>/demo_overlay.mp4        the clip with the skeleton drawn on
     <out>/demo_knee_angle.png     the knee-angle curve
@@ -371,7 +371,7 @@ def main():
         df, still, frames, fps = track(prepared, model, side, args.out, clip.stem,
                                        write_video=not args.compare)
         if df.empty:
-            print("  no landmarks found at all — see FILMING.md"); continue
+            print("  no landmarks found at all — is the whole body in frame?"); continue
         df["knee_flex_deg"] = knee_flexion(df)
         df["smooth"] = df.knee_flex_deg.rolling(5, center=True, min_periods=1).mean()
         r = report(df, frames, fps, clip.name)
@@ -424,8 +424,7 @@ def main():
                 print(f"  {f}  ({p.stat().st_size/1e3:.0f} KB)")
         print(f"\nSide measured: {r['side']} leg · {r['reps']} repetitions · "
               f"peak {r['peak']:.0f}° · range {r['rom']:.0f}°")
-        print("\nShow them in this order: the still, then the video (twice), then the curve.")
-        print("Put them on the machine you will teach from, and play the video once in the room.")
+        print("\nLook at them in this order: the still, then the video, then the curve.")
 
 
 if __name__ == "__main__":

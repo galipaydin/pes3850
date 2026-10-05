@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-PES 517 · Week 1 — LIVE pose estimation from a webcam, for the lecture room.
+PES 517 · Week 1 — live pose estimation from a webcam.
 
 A full-screen window: the skeleton on the left, a scrolling knee-angle trace on
-the right, a large angle readout and a repetition counter. Designed to be read
-from the back row and operated with one hand while you talk.
+the right, a large angle readout and a repetition counter.
 
     python3 live_demo.py                 # default camera
     python3 live_demo.py --check         # test everything, change nothing
@@ -17,9 +16,8 @@ KEYS
     m      mirror on / off         l  switch leg (left / right / auto)
     h      hide the panel          q or ESC  quit
 
-BEFORE THE LECTURE run  python3 live_demo.py --check  on the room's machine.
-On macOS the first run triggers a camera permission prompt. Do not let twenty
-students watch you click through it.
+Run  python3 live_demo.py --check  first. On macOS the first run triggers a
+camera permission prompt, which is easier to deal with before you need it.
 """
 from __future__ import annotations
 import argparse, sys, time

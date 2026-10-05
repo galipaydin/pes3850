@@ -51,11 +51,9 @@ demo/
 ├── demo_pose_live.ipynb   the Colab notebook above
 ├── live_demo.py           real time from a webcam
 ├── run_demo.py            process a video file from the command line
-├── clips/                 four freely-licensed clips, attributed in VIDEO-SOURCES.md
+├── clips/                 four freely-licensed clips, credited in demo/README.md
 ├── out/                   the figures, already generated
-├── LIVE-DEMO.md           running it live: pre-flight, keys, failure modes
-├── FILMING.md             how to film your own: angle, framing, length, consent
-└── VIDEO-SOURCES.md       what each clip is, and how well each one tracked
+└── README.md              how to run it, how to film your own, and the credits
 ```
 
 **Measured on `squat_frontal_raise.mp4`:** landmarks found in 100% of frames, median confidence 0.94, three repetitions, 134° range of motion. Full results in `demo/out/RESULTS.txt`.
