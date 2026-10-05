@@ -198,15 +198,18 @@ def screen_size():
 
 
 def window_size(win, full=False, fallback=(1600, 760)):
-    if full:
-        return screen_size()
+    """The window's real drawable area, asked of OpenCV.
+
+    This is authoritative and the screen size is not: in full screen the menu bar
+    and notch are not drawable, so the display's logical height overshoots and the
+    window cannot fit what we drew — which shows up as a band at the top."""
     try:
         x, y, w, h = cv2.getWindowImageRect(win)
         if w > 80 and h > 80:
             return w, h
     except Exception:
         pass
-    return fallback
+    return screen_size() if full else fallback
 
 
 def fill(frame, tw, th):
@@ -353,6 +356,56 @@ def check(args) -> int:
     return 0
 
 
+def probe():
+    """Open the window, go full screen, and report every size involved.
+
+    The grey band at the top of a full-screen window means the canvas we draw and
+    the area the window can actually draw into disagree. These numbers say which
+    one is wrong; nothing else here can tell us."""
+    import numpy as _np
+    print("probing the display\n")
+    sw, sh = screen_size()
+    print(f"  screen (OS)          {sw} x {sh}")
+
+    cv2.namedWindow(WIN, cv2.WINDOW_NORMAL)
+    cv2.resizeWindow(WIN, 1600, 760)
+    frame = _np.full((760, 1600, 3), INK, _np.uint8)
+    for _ in range(8):
+        cv2.imshow(WIN, frame); cv2.waitKey(30)
+    try:
+        print(f"  window rect, windowed {cv2.getWindowImageRect(WIN)}")
+    except Exception as e:
+        print(f"  window rect, windowed  FAILED: {e}")
+
+    cv2.setWindowProperty(WIN, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+    for _ in range(14):
+        cv2.imshow(WIN, frame); cv2.waitKey(30)
+    try:
+        r = cv2.getWindowImageRect(WIN)
+        print(f"  window rect, FULL     {r}")
+        fw, fh = r[2], r[3]
+    except Exception as e:
+        print(f"  window rect, FULL      FAILED: {e}"); fw, fh = sw, sh
+
+    # draw a canvas at exactly that size, with corner markers, and hold it
+    probe_img = _np.full((fh, fw, 3), (40, 40, 44), _np.uint8)
+    cv2.rectangle(probe_img, (0, 0), (fw - 1, fh - 1), (0, 0, 255), 10)
+    for (x, y, lab) in ((20, 60, "TOP-LEFT"), (fw - 300, 60, "TOP-RIGHT"),
+                        (20, fh - 30, "BOTTOM-LEFT"), (fw - 360, fh - 30, "BOTTOM-RIGHT")):
+        text(probe_img, lab, (x, y), 1.0, (255, 255, 255), 2, shadow=False)
+    text(probe_img, f"canvas {fw} x {fh}", (int(fw * 0.32), int(fh * 0.5)),
+         1.6, (120, 220, 255), 3, shadow=False)
+    text(probe_img, "all four red edges visible and no grey band = correct",
+         (int(fw * 0.17), int(fh * 0.56)), 0.9, (200, 200, 205), 2, shadow=False)
+    text(probe_img, "any key to close", (int(fw * 0.40), int(fh * 0.62)),
+         0.8, (150, 150, 158), 1, shadow=False)
+    cv2.imshow(WIN, probe_img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    print("\n  If a grey band showed, tell me the two numbers above.")
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -368,8 +421,12 @@ def main():
                     help="panel width as a fraction of the window (default 0.30; "
                          "lower it if the camera view is cropped too tightly)")
     ap.add_argument("--check", action="store_true", help="test and exit")
+    ap.add_argument("--probe", action="store_true",
+                    help="report every window size involved in full screen, and exit")
     args = ap.parse_args()
 
+    if args.probe:
+        sys.exit(probe())
     if args.check:
         sys.exit(check(args))
 
@@ -402,7 +459,9 @@ def main():
     t_prev, fps_s = time.time(), 0.0
     shots = 0
 
-    print(f"\nRunning on {label}. Press q to quit, h for the keys.\n")
+    cv2.waitKey(60)
+    w0, h0 = window_size(WIN, False)
+    print(f"\nRunning on {label}. Window {w0}x{h0}. Press q to quit, h for the keys.\n")
 
     with vision.PoseLandmarker.create_from_options(opts) as landmarker:
         t0 = time.time()
@@ -484,15 +543,11 @@ def main():
                      (14, 58), 0.6, WHITE, 1)
 
             cv2.imshow(WIN, canvas)
-            # waitKey only samples while the OpenCV window has focus, and only for the
-            # millisecond it is given. At 30 fps a single 1 ms poll per frame drops most
-            # key presses, so poll a few times and keep the first real key.
-            k = 255
-            for _ in range(6):
-                kk = cv2.waitKey(1) & 0xFF
-                if kk != 255:
-                    k = kk
-                    break
+            # One poll per frame. waitKey drains the queued key events, so a single
+            # call does not lose presses — and on macOS each call pumps the event
+            # loop and costs well over the millisecond asked for, so calling it
+            # several times per frame cost two thirds of the frame rate.
+            k = cv2.waitKey(1) & 0xFF
 
             # the window's close button is a route out that does not need focus.
             # Require two consecutive bad readings so one odd value cannot end the demo.
@@ -516,7 +571,10 @@ def main():
                                       cv2.WINDOW_FULLSCREEN if full else cv2.WINDOW_NORMAL)
                 if not full:
                     cv2.resizeWindow(WIN, 1600, 760)
-                cv2.waitKey(80)          # let the window manager finish resizing
+                for _ in range(6):       # let the window manager finish resizing
+                    cv2.waitKey(30)
+                mw, mh = window_size(WIN, full)
+                print(f"  {'full screen' if full else 'windowed'}: drawing at {mw}x{mh}")
             elif k == ord("s"):
                 shots += 1
                 name = f"live_shot_{shots:02d}.png"
