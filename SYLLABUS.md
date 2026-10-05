@@ -82,35 +82,7 @@ On successful completion, a student will be able to:
 
 *A detailed session-by-session breakdown — objectives, lecture outline, lab specification, dataset, deliverable and readings — is in `02-weekly-course-content.md`.*
 
-## 5. Assessment
-
-| Component | Weight | Notes |
-|---|---|---|
-| Weekly laboratory submissions | **30%** | 12 labs; best 10 count. Colab link + 150-word interpretation. |
-| Article critiques (2 × 5%) | **10%** | One page each, structured reviewer checklist. |
-| Midterm examination (Week 8) | **20%** | 75 min, open-book, no internet/LLM. Concepts and interpretation, not code recall. |
-| Term project | **35%** | Proposal 5% · Presentation + demo 10% · Final report 20%. Teams of 2. |
-| Participation and lab engagement | **5%** | In-class discussion, peer help, project peer review. |
-
-**Passing:** overall ≥ 60/100 **and** at least 8 of 12 labs submitted. Letter grades per METU regulations.
-
-### What differs between undergraduate and graduate students
-
-The weights above are identical for both, and so is almost everything else. **One** component differs.
-
-| | Undergraduate | Graduate |
-|---|---|---|
-| **Weekly labs** | Identical | Identical |
-| **Midterm** | Same paper, same marking | Same paper, same marking |
-| **Article critiques** | Identical — two critiques, 5% each | Identical |
-| **Term project** (35%) | Report of **2000 words** | Report of **3000 words**, with an additional section positioning the work against **at least three published studies** |
-| **Participation** | Identical | Identical |
-
-Everything else — the laboratory sessions, the article critiques, the project brief, the rubric criteria and the weightings — is the same for everyone. Graduate students are not given more work for its own sake; they are asked for the one thing a graduate course has to demand, which is awareness of where their own work sits in the published literature.
-
-Full rubrics, the project brief and the exam blueprint are in `04-assessment-and-rubrics.md`.
-
-## 6. Policy on the use of AI tools
+## 5. Policy on the use of AI tools
 
 You are expected to use large language models in this course. That is part of the subject matter. The conditions are:
 
@@ -119,7 +91,7 @@ You are expected to use large language models in this course. That is part of th
 3. **Midterm — no LLM, no internet.** The exam tests what you can judge without assistance.
 4. **Article critiques — LLM may be used for language, not for reading.** The critique must reflect your reading of the paper.
 
-## 7. Software, accounts and equipment
+## 6. Software, accounts and equipment
 
 Bring a laptop to every session. Everything runs in the browser; nothing needs to be installed.
 
@@ -131,7 +103,7 @@ Bring a laptop to every session. Everything runs in the browser; nothing needs t
 
 No paid subscription is required. Where a paid tier would help, a free fallback is provided in the notebook.
 
-## 8. Course materials
+## 7. Course materials
 
 There is no single textbook. Each week has one required reading (10–20 pages) and optional depth material; all are open access or supplied through ODTÜClass. Recommended background references:
 
@@ -142,11 +114,11 @@ There is no single textbook. Each week has one required reading (10–20 pages) 
 
 The full reading list, dataset catalogue and tool links are in `05-resources-datasets-readings.md`.
 
-## 9. Research ethics for student projects
+## 8. Research ethics for student projects
 
 If your term project involves **recording video of people, collecting sensor or physiological data from people, or using an identifiable athlete's data**, you must either (a) use one of the approved open datasets listed in the resources file, or (b) obtain approval from the **METU Human Subjects Ethics Committee (İnsan Araştırmaları Etik Kurulu)** before collecting anything. A template participant information sheet and consent form is provided in Week 8. Self-recording (you filming yourself) and recording consenting classmates for in-class labs is covered by a course-level consent form signed in Week 1; that consent does **not** extend to publishing the footage.
 
-## 10. Attendance, late work and accessibility
+## 9. Attendance, late work and accessibility
 
 - **Attendance:** 70% minimum, per METU regulations. The lab cannot be replicated at home in the same way, but all notebooks remain available.
 - **Late labs:** accepted up to 7 days late at 70% credit; after that, use one of your two dropped labs. Project deadlines are firm.
