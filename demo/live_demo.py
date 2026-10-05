@@ -14,7 +14,8 @@ KEYS
     SPACE  freeze / unfreeze       f  full screen
     s      save a screenshot       r  reset the trace and the rep counter
     m      mirror on / off         l  switch leg (left / right / auto)
-    h      hide the panel          q or ESC  quit
+    p      hide / show the panel   h  this list, on screen
+    q or ESC  quit
 
 Run  python3 live_demo.py --check  first. On macOS the first run triggers a
 camera permission prompt, which is easier to deal with before you need it.
@@ -105,6 +106,8 @@ def highlight_knee(img, lm, ix) -> None:
 
 
 def text(img, s, org, scale, color, thick=2, shadow=True):
+    # OpenCV's Hershey fonts are ASCII-only; anything else renders as "?"
+    s = s.encode("ascii", "replace").decode("ascii")
     f = cv2.FONT_HERSHEY_SIMPLEX
     if shadow:
         cv2.putText(img, s, (org[0] + 2, org[1] + 2), f, scale, (0, 0, 0), thick + 2, cv2.LINE_AA)
@@ -155,8 +158,8 @@ def trace_panel(w, h, hist, angle, reps, vis, side, paused):
     text(p, "last 10 seconds", (gx0, gy1 + int(26*s)), 0.46 * s, GREY, 1, shadow=False)
 
     # shrink the key hint until it fits the panel, and drop items if it still will not
-    for hint in ("SPACE freeze | f full | s save | r reset | l leg | h panel | q quit",
-                 "SPACE freeze | f full | s save | r reset | q quit",
+    for hint in ("SPACE freeze | f full | s save | r reset | l leg | p panel | h keys | q quit",
+                 "SPACE freeze | f full | s save | r reset | h keys | q quit",
                  "SPACE freeze | f full | q quit",
                  "SPACE freeze | q quit"):
         hs = 0.40 * s
@@ -217,6 +220,48 @@ def fill(frame, tw, th):
     r = cv2.resize(frame, (nw, nh), interpolation=interp)
     x0, y0 = (nw - tw) // 2, (nh - th) // 2
     return r[y0:y0 + th, x0:x0 + tw]
+
+
+HELP = [("SPACE", "freeze / unfreeze"), ("f", "full screen"),
+        ("s", "save a screenshot"), ("r", "reset trace and reps"),
+        ("l", "switch leg"), ("m", "mirror"),
+        ("p", "hide / show the panel"), ("h", "this list"), ("q", "quit")]
+
+FOCUS_HINT = "click the window if keys do nothing"
+
+
+def draw_help(canvas):
+    """Key list, centred, with the box measured from the text rather than guessed."""
+    h, w = canvas.shape[:2]
+    F = cv2.FONT_HERSHEY_SIMPLEX
+    sc = max(0.55, min(1.5, w / 1500.0))
+    k_sc, d_sc = 0.70 * sc, 0.62 * sc
+    pad, row = int(30 * sc), int(40 * sc)
+
+    k_w = max(cv2.getTextSize(k, F, k_sc, 2)[0][0] for k, _ in HELP)
+    d_w = max(cv2.getTextSize(d, F, d_sc, 1)[0][0] for _, d in HELP)
+    gap = int(26 * sc)
+    bw = pad * 2 + k_w + gap + d_w
+    bh = pad + int(34 * sc) + row * len(HELP) + int(26 * sc) + pad
+
+    x0, y0 = (w - bw) // 2, (h - bh) // 2
+    x0, y0 = max(0, x0), max(0, y0)
+    bw, bh = min(bw, w - x0), min(bh, h - y0)
+
+    box = canvas[y0:y0 + bh, x0:x0 + bw]
+    canvas[y0:y0 + bh, x0:x0 + bw] = cv2.addWeighted(
+        box, 0.15, np.full_like(box, INK), 0.85, 0)
+
+    text(canvas, "KEYS", (x0 + pad, y0 + pad + int(16 * sc)), 0.58 * sc,
+         (165, 165, 172), 1, shadow=False)
+    y = y0 + pad + int(34 * sc) + int(22 * sc)
+    for key, what in HELP:
+        text(canvas, key,  (x0 + pad, y), k_sc, (255, 255, 255), 2, shadow=False)
+        text(canvas, what, (x0 + pad + k_w + gap, y), d_sc, (196, 196, 202), 1, shadow=False)
+        y += row
+    text(canvas, "h closes this", (x0 + pad, y0 + bh - int(14 * sc)),
+         0.46 * sc, (140, 140, 148), 1, shadow=False)
+    return canvas
 
 
 def compose(frame, panel_args, win, show_panel, panel_frac=0.30, full=False):
@@ -349,6 +394,9 @@ def main():
     mirror = not args.no_mirror
     side = "right" if args.side == "auto" else args.side
     show_panel = True
+    show_help = False
+    closed_for = 0
+    key_seen = False
     paused = False
     frozen = None
     t_prev, fps_s = time.time(), 0.0
@@ -422,12 +470,43 @@ def main():
 
             canvas = compose(frame, (hist, angle, reps, vis, side, paused),
                              WIN, show_panel, args.panel, full)
-            ch = canvas.shape[0]
+            ch, cw = canvas.shape[:2]
             text(canvas, f"{fps_s:4.0f} fps", (14, ch - 16), 0.5, WHITE, 1)
+            # with the panel hidden there is no visible way back, so say so
+            if not show_panel:
+                text(canvas, "p  panel     h  keys", (14, 30), 0.6, WHITE, 1)
+            if show_help:
+                canvas = draw_help(canvas)
+            elif not key_seen and n_frames > 90:
+                # nothing has been pressed yet; the commonest reason is that the
+                # terminal still has focus and OpenCV never sees the keys
+                text(canvas, "click this window first  |  h  keys  |  q  quit",
+                     (14, 58), 0.6, WHITE, 1)
 
             cv2.imshow(WIN, canvas)
-            k = cv2.waitKey(1) & 0xFF
-            if k in (ord("q"), 27):
+            # waitKey only samples while the OpenCV window has focus, and only for the
+            # millisecond it is given. At 30 fps a single 1 ms poll per frame drops most
+            # key presses, so poll a few times and keep the first real key.
+            k = 255
+            for _ in range(6):
+                kk = cv2.waitKey(1) & 0xFF
+                if kk != 255:
+                    k = kk
+                    break
+
+            # the window's close button is a route out that does not need focus.
+            # Require two consecutive bad readings so one odd value cannot end the demo.
+            try:
+                gone = cv2.getWindowProperty(WIN, cv2.WND_PROP_VISIBLE) < 1
+            except Exception:
+                gone = True
+            closed_for = closed_for + 1 if gone else 0
+            if closed_for >= 2:
+                break
+
+            if k != 255:
+                key_seen = True
+            if k in (ord("q"), ord("Q"), 27):
                 break
             elif k == ord(" "):
                 paused = not paused
@@ -447,8 +526,10 @@ def main():
                 hist.clear(); reps, armed = 0, True; vis_r.clear(); vis_l.clear()
             elif k == ord("m"):
                 mirror = not mirror
-            elif k == ord("h"):
+            elif k == ord("p"):
                 show_panel = not show_panel
+            elif k in (ord("h"), ord("?")):
+                show_help = not show_help
             elif k == ord("l"):
                 order = ["auto", "left", "right"]
                 args.side = order[(order.index(args.side) + 1) % 3]
@@ -461,5 +542,17 @@ def main():
     print(f"\n{reps} repetitions counted.")
 
 
+def run(argv=None):
+    try:
+        main()
+    except KeyboardInterrupt:
+        # Ctrl+C is a legitimate way out; do not dump a traceback mid-lecture
+        try:
+            cv2.destroyAllWindows()
+        except Exception:
+            pass
+        print("\nstopped")
+
+
 if __name__ == "__main__":
-    main()
+    run()

@@ -20,7 +20,9 @@ python3 live_demo.py --check                                # test your webcam
 python3 live_demo.py                                        # live, from the webcam
 ```
 
-`live_demo.py` shows the skeleton following you in real time with a knee angle, a scrolling trace and a repetition counter. **SPACE** freezes a frame, **f** is full screen, **q** quits.
+`live_demo.py` shows the skeleton following you in real time with a knee angle, a scrolling trace and a repetition counter. **SPACE** freezes a frame, **f** is full screen, **h** lists the keys, **q** quits.
+
+If the keys do nothing, click the window — OpenCV only sees them while its own window has focus. Ctrl+C in the terminal and the window's close button both work regardless.
 
 Try turning side on to the camera and then rotating slowly. The confidence number falls, and below 0.50 the panel says *the model is guessing*. That is the course's first question — what can the model actually see? — answered as a measurement rather than a claim.
 
