@@ -1,14 +1,14 @@
 # PES 517 — Artificial Intelligence Applications in Sport
 
 **Middle East Technical University · Faculty of Education · Department of Physical Education and Sports**
-Graduate elective (MS/PhD) · Fall 2026‑2027
+Elective (MS/PhD) · Fall 2026‑2027
 
 | | |
 |---|---|
 | **Course code** | PES 517 (proposed — 517 is currently unused in the PES 5XX series) |
 | **Credits** | 3 (2‑2) — 2 h lecture + 2 h computer lab per week |
 | **ECTS** | 8.0 *(confirm with the department; most PES 5XX courses are catalogued at 8.0)* |
-| **Level** | Graduate (MS and PhD), open to students from other departments |
+| **Level** | MS and PhD, open to students from other departments |
 | **Language of instruction** | English |
 | **Prerequisites** | None. No programming or mathematics background is assumed. |
 | **Class size** | 20 (cap recommended — lab-based) |
@@ -90,7 +90,7 @@ On successful completion, a student will be able to:
 | Term project | **35%** | Proposal 5% · Presentation + demo 10% · Final report 20%. Teams of 2. |
 | Participation and lab engagement | **5%** | In-class discussion, peer help, project peer review. |
 
-**Passing:** overall ≥ 60/100 **and** at least 8 of 12 labs submitted. Graduate letter grades per METU regulations.
+**Passing:** overall ≥ 60/100 **and** at least 8 of 12 labs submitted. Letter grades per METU regulations.
 
 Full rubrics, the project brief and the exam blueprint are in `04-assessment-and-rubrics.md`.
 
