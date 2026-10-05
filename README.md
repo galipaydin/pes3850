@@ -1,7 +1,7 @@
 # PES 517 — Artificial Intelligence Applications in Sport
 
 **Middle East Technical University · Department of Physical Education and Sports**
-Graduate elective · laboratory notebooks
+elective · laboratory notebooks
 
 ---
 
@@ -26,7 +26,6 @@ Click a badge. The notebook opens in Google Colab — nothing to install, no acc
 | 12 | A grounded assistant | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab11_grounded_assistant.ipynb) |
 | 13 | Audit a real product | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab12_product_audit.ipynb) |
 
-Week 8 is the midterm and the project workshop; Week 14 is presentations. Neither has a lab.
 
 ---
 
