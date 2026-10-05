@@ -174,9 +174,31 @@ def trace_panel(w, h, hist, angle, reps, vis, side, paused):
     return p
 
 
-def window_size(win, fallback=(1600, 760)):
-    """Actual drawable size of the window. OpenCV does not scale the image to the
-    window, so we render at exactly this size instead of letting it letterbox."""
+_SCREEN = None
+
+
+def screen_size():
+    """Logical screen size, asked of the OS once. Used for the full-screen canvas.
+
+    Deliberately NOT derived from the window: the window's image area depends on
+    the image we last gave it, so reading it back to decide the next image size
+    is circular and settles on the wrong value."""
+    global _SCREEN
+    if _SCREEN is not None:
+        return _SCREEN
+    try:
+        import tkinter
+        r = tkinter.Tk(); r.withdraw()
+        _SCREEN = (r.winfo_screenwidth(), r.winfo_screenheight())
+        r.destroy()
+    except Exception:
+        _SCREEN = (1920, 1080)
+    return _SCREEN
+
+
+def window_size(win, full=False, fallback=(1600, 760)):
+    if full:
+        return screen_size()
     try:
         x, y, w, h = cv2.getWindowImageRect(win)
         if w > 80 and h > 80:
@@ -199,13 +221,13 @@ def fill(frame, tw, th):
     return r[y0:y0 + th, x0:x0 + tw]
 
 
-def compose(frame, panel_args, win, show_panel, panel_frac=0.30):
+def compose(frame, panel_args, win, show_panel, panel_frac=0.30, full=False):
     """Build one image that is exactly the size of the window.
 
     The camera frame is centre-cropped to fill its area rather than letterboxed,
     so there are never grey bars; what is lost is background at the sides, not
     the person."""
-    W, H = window_size(win)
+    W, H = window_size(win, full)
     if not show_panel:
         return fill(frame, W, H)
     pw = int(np.clip(W * panel_frac, 280, 700))
@@ -273,6 +295,8 @@ def check(args) -> int:
             n += 1
     cap.release()
     fps = n / max(1e-6, time.time() - t0)
+    sw, sh = screen_size()
+    print(f"  screen     {sw}x{sh}  (full screen renders at this size)")
     print(f"  speed      {fps:.0f} fps over {n} frames")
     print(f"  detection  person found in {found}/{n} frames")
     if fps < 10:
@@ -316,7 +340,7 @@ def main():
         running_mode=vision.RunningMode.VIDEO, num_poses=1,
         min_pose_detection_confidence=0.5, min_tracking_confidence=0.5)
 
-    cv2.namedWindow(WIN, cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)
+    cv2.namedWindow(WIN, cv2.WINDOW_NORMAL)
     cv2.resizeWindow(WIN, 1600, 760)
     full = False
 
@@ -399,7 +423,7 @@ def main():
             t_prev = now
 
             canvas = compose(frame, (hist, angle, reps, vis, side, paused),
-                             WIN, show_panel, args.panel)
+                             WIN, show_panel, args.panel, full)
             ch = canvas.shape[0]
             text(canvas, f"{fps_s:4.0f} fps", (14, ch - 16), 0.5, WHITE, 1)
 

@@ -96,7 +96,15 @@ The scripted route, about four minutes:
 
 ## A note on full screen
 
-Press `f` and the image fills the screen exactly — no grey bars, whatever the shape of the projector. The composite is rendered at the window's real size each frame, and the camera picture is centre-cropped to fill its half rather than letterboxed into it.
+Press `f` and the image fills the screen exactly — no grey bars, whatever the shape of the projector. The composite is rendered at the **screen's** size, which `--check` prints so you can confirm it before the session:
+
+```
+  screen     1800x1169  (full screen renders at this size)
+```
+
+The camera picture is centre-cropped to fill its half rather than letterboxed into it, so there are no bars inside the video area either.
+
+> If a grey band ever does appear at the top, the screen size was read wrongly. Run `--check`, compare the number it prints with your display's actual resolution, and tell me if they differ.
 
 If that crop is tighter than you want on a tall screen, give the video more room:
 
@@ -124,6 +132,7 @@ If somebody asks whether this is how commercial systems count repetitions, the h
 | Skeleton flickers | Low light. More light helps far more than any setting. |
 | It tracks the wrong person | It takes one person. Ask the other to step out of frame. |
 | Panel text is cut off | Make the window bigger, or press `f` for full screen. |
+| A grey band at the top in full screen | The screen size was misread. `--check` prints what it detected; compare it with your display's real resolution. |
 | The camera view looks cropped too tightly | `--panel 0.24` gives the video more room. The frame is centre-cropped to fill its area rather than letterboxed, so you lose background at the sides, never the person. |
 | It aborts with `DrishtiMetalHelper` | MediaPipe 1.0.x on macOS Apple silicon. `pip install 'mediapipe==0.10.18'` — `requirements.txt` already pins it. |
 
