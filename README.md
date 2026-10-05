@@ -58,7 +58,7 @@ demo/
 
 **Measured on `squat_frontal_raise.mp4`:** landmarks found in 100% of frames, median confidence 0.94, three repetitions, 134° range of motion. Full results in `demo/out/RESULTS.txt`.
 
-The clips are CC BY / CC BY-SA. If you use them in a presentation, name the creator — the attributions are in `VIDEO-SOURCES.md`.
+The clips are CC BY / CC BY-SA. If you use one in a presentation, carry the credit with it — they are listed in [`demo/README.md`](demo/README.md).
 
 ---
 
