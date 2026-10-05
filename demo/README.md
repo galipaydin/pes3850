@@ -21,14 +21,26 @@ python3 run_demo.py clips/squat_frontal_raise.mp4 --crop
 
 | | |
 |---|---|
+| **`live_demo.py`** | **Run it live from a webcam** — skeleton, live knee angle, rep counter. See `LIVE-DEMO.md` |
 | **`run_demo.py`** | Build the demo from any clip. Auto-picks the visible leg, trims, downscales, crops, writes H.264 |
 | **`clips/`** | Four clips, licensed and attributed. See `VIDEO-SOURCES.md` |
 | **`out/`** | All four clips already processed — three files each, plus `RESULTS.txt` |
+| **`LIVE-DEMO.md`** | Running it live in the room: pre-flight, keys, and the four-minute script |
 | **`FILMING.md`** | How to film your own, and the consent to get first |
 | **`VIDEO-SOURCES.md`** | What each clip is, measured tracking quality, and which to use |
 | **`demo_pose_live.ipynb`** | The same thing in Google Colab — [open it](https://colab.research.google.com/github/galipaydin/pes517/blob/main/demo/demo_pose_live.ipynb). Downloads the clips from the public repo, so nothing needs uploading |
 
 ---
+
+## Two ways to run it
+
+**Pre-rendered (safe).** The three files in `out/` are already built. You play a video and show two images; nothing can fail. This is the default and what the lecture notes assume.
+
+**Live from a camera (better, if the room allows).** `python3 live_demo.py` — the skeleton follows you in real time, with a live knee angle, a scrolling trace and a repetition counter. You can freeze it mid-squat to explain, and then break it on purpose by turning away from the camera, which is the Week 1 lesson delivered as a measurement rather than a claim.
+
+**Run `python3 live_demo.py --check` on the room's machine a day before.** On macOS the first run asks for camera permission, and you do not want to do that in front of twenty students. Full briefing in `LIVE-DEMO.md`.
+
+If the camera fails during the session, `--source clips/squat_frontal_raise.mp4` loops a video through the same window and nobody needs to know.
 
 ## What to show, in this order
 

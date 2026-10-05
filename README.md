@@ -38,12 +38,24 @@ The first session opens with a computer finding a person's hip, knee and ankle i
 
 Four clips ship with it, so it works immediately — or upload your own video of a squat. By Week 10 you will do exactly this with your own footage, and then measure how wrong it is against a manual reference.
 
+Or run it **live from your own webcam** — the skeleton follows you, with a knee angle that updates thirty times a second, a scrolling trace and a repetition counter:
+
+```bash
+pip install mediapipe opencv-python
+python3 demo/live_demo.py --check     # test first
+python3 demo/live_demo.py             # go
+```
+
+Press **SPACE** to freeze a frame mid-squat. Then turn away from the camera and watch the confidence fall — that is the course's first question, measured rather than asserted: *what can the model actually see?*
+
 ```
 demo/
-├── demo_pose_live.ipynb   the notebook above
-├── run_demo.py            the same thing from one command line, for local use
+├── demo_pose_live.ipynb   the Colab notebook above
+├── live_demo.py           real time from a webcam
+├── run_demo.py            process a video file from the command line
 ├── clips/                 four freely-licensed clips, attributed in VIDEO-SOURCES.md
 ├── out/                   the figures, already generated
+├── LIVE-DEMO.md           running it live: pre-flight, keys, failure modes
 ├── FILMING.md             how to film your own: angle, framing, length, consent
 └── VIDEO-SOURCES.md       what each clip is, and how well each one tracked
 ```
