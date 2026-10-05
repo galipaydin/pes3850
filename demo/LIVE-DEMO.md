@@ -94,11 +94,23 @@ The scripted route, about four minutes:
 
 ---
 
+## A note on full screen
+
+Press `f` and the image fills the screen exactly — no grey bars, whatever the shape of the projector. The composite is rendered at the window's real size each frame, and the camera picture is centre-cropped to fill its half rather than letterboxed into it.
+
+If that crop is tighter than you want on a tall screen, give the video more room:
+
+```bash
+python3 live_demo.py --panel 0.24
+```
+
 ## What it is doing
 
 The same thing as the pre-rendered demo and as the Week 10 laboratory: **MediaPipe Pose Landmarker through the Tasks API**, 33 landmarks, the angle at the knee between the thigh and the shank. The only differences are that the frames come from a camera and the model is the `lite` one, which is quicker and slightly less steady.
 
-The repetition counter is deliberately crude — it counts a repetition when the knee passes 75° and re-arms below 35°. If somebody asks whether that is how commercial systems count repetitions, the honest answer is that many of them are not much more sophisticated, and that the thresholds are somebody's choice. That is Week 9.
+The repetition counter is deliberately crude — it counts a repetition when the knee passes 75° and re-arms below 35°. It will not count while the model's confidence in that leg is below 0.50, nor during the first moments while it is still deciding which leg faces the camera, because the leg it has not chosen yet is often the hidden one and its angle is noise.
+
+If somebody asks whether this is how commercial systems count repetitions, the honest answer is that many are not much more sophisticated, and that both thresholds are somebody's choice rather than a measurement. That is Week 9.
 
 ---
 
@@ -112,6 +124,7 @@ The repetition counter is deliberately crude — it counts a repetition when the
 | Skeleton flickers | Low light. More light helps far more than any setting. |
 | It tracks the wrong person | It takes one person. Ask the other to step out of frame. |
 | Panel text is cut off | Make the window bigger, or press `f` for full screen. |
+| The camera view looks cropped too tightly | `--panel 0.24` gives the video more room. The frame is centre-cropped to fill its area rather than letterboxed, so you lose background at the sides, never the person. |
 | It aborts with `DrishtiMetalHelper` | MediaPipe 1.0.x on macOS Apple silicon. `pip install 'mediapipe==0.10.18'` — `requirements.txt` already pins it. |
 
 ---

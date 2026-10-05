@@ -174,6 +174,47 @@ def trace_panel(w, h, hist, angle, reps, vis, side, paused):
     return p
 
 
+def window_size(win, fallback=(1600, 760)):
+    """Actual drawable size of the window. OpenCV does not scale the image to the
+    window, so we render at exactly this size instead of letting it letterbox."""
+    try:
+        x, y, w, h = cv2.getWindowImageRect(win)
+        if w > 80 and h > 80:
+            return w, h
+    except Exception:
+        pass
+    return fallback
+
+
+def fill(frame, tw, th):
+    """Centre-crop and scale so the frame exactly fills tw x th. No grey bars."""
+    h, w = frame.shape[:2]
+    if w == 0 or h == 0:
+        return np.full((th, tw, 3), INK, np.uint8)
+    scale = max(tw / w, th / h)
+    nw, nh = max(tw, int(round(w * scale))), max(th, int(round(h * scale)))
+    interp = cv2.INTER_AREA if scale < 1 else cv2.INTER_LINEAR
+    r = cv2.resize(frame, (nw, nh), interpolation=interp)
+    x0, y0 = (nw - tw) // 2, (nh - th) // 2
+    return r[y0:y0 + th, x0:x0 + tw]
+
+
+def compose(frame, panel_args, win, show_panel, panel_frac=0.30):
+    """Build one image that is exactly the size of the window.
+
+    The camera frame is centre-cropped to fill its area rather than letterboxed,
+    so there are never grey bars; what is lost is background at the sides, not
+    the person."""
+    W, H = window_size(win)
+    if not show_panel:
+        return fill(frame, W, H)
+    pw = int(np.clip(W * panel_frac, 280, 700))
+    vw = W - pw
+    video = fill(frame, vw, H)
+    panel = trace_panel(pw, H, *panel_args)
+    return np.hstack([video, panel])
+
+
 def open_source(args):
     if args.source:
         cap = cv2.VideoCapture(args.source)
@@ -256,6 +297,9 @@ def main():
     ap.add_argument("--height", type=int, default=720)
     ap.add_argument("--side", choices=["auto", "left", "right"], default="auto")
     ap.add_argument("--no-mirror", action="store_true")
+    ap.add_argument("--panel", type=float, default=0.30, metavar="F",
+                    help="panel width as a fraction of the window (default 0.30; "
+                         "lower it if the camera view is cropped too tightly)")
     ap.add_argument("--check", action="store_true", help="test and exit")
     args = ap.parse_args()
 
@@ -272,13 +316,14 @@ def main():
         running_mode=vision.RunningMode.VIDEO, num_poses=1,
         min_pose_detection_confidence=0.5, min_tracking_confidence=0.5)
 
-    cv2.namedWindow(WIN, cv2.WINDOW_NORMAL)
+    cv2.namedWindow(WIN, cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)
     cv2.resizeWindow(WIN, 1600, 760)
     full = False
 
     hist = deque(maxlen=300)                 # ~10 s at 30 fps
     vis_r, vis_l = deque(maxlen=60), deque(maxlen=60)   # ~2 s, for the side choice
     reps, armed = 0, True
+    n_frames, auto_at, settle_at = 0, -99, -99
     mirror = not args.no_mirror
     side = "right" if args.side == "auto" else args.side
     show_panel = True
@@ -286,7 +331,6 @@ def main():
     frozen = None
     t_prev, fps_s = time.time(), 0.0
     shots = 0
-    auto_t = 0.0
 
     print(f"\nRunning on {label}. Press q to quit, h for the keys.\n")
 
@@ -306,6 +350,7 @@ def main():
                 frame = frozen.copy()
 
             now = time.time()
+            n_frames += 1
             res = landmarker.detect_for_video(
                 mp.Image(image_format=mp.ImageFormat.SRGB,
                          data=cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)),
@@ -319,13 +364,16 @@ def main():
                 # Standing upright, both legs are visible and a single frame cannot tell
                 # them apart. The difference only becomes decisive during the movement,
                 # so judge on a rolling median and require a clear margin before moving.
-                if args.side == "auto" and len(vis_r) >= 20 and now - auto_t > 0.5:
-                    auto_t = now
+                if args.side == "auto" and len(vis_r) >= 20 and n_frames - auto_at >= 15:
+                    auto_at = n_frames
                     mr, ml = float(np.median(vis_r)), float(np.median(vis_l))
                     better = "right" if mr > ml else "left"
                     margin = abs(mr - ml)
                     if better != side and margin > 0.08:
                         side = better
+                        # the angle series jumps when the leg changes; disarm so the
+                        # jump is not counted as a repetition
+                        armed, settle_at = False, n_frames
                 ix = SIDES[side]
                 angle = knee_angle(lm, ix)
                 vis = side_visibility(lm, ix)
@@ -334,7 +382,13 @@ def main():
                     highlight_knee(frame, lm, ix)
                 if not paused:
                     hist.append(angle)
-                    if armed and angle > 75:
+                    # Count only once the side has actually been decided. For the
+                    # first ~20 frames the code is still watching the default leg,
+                    # which may be the hidden one, and its noisy angle would
+                    # otherwise register a repetition that never happened.
+                    decided = args.side != "auto" or len(vis_r) >= 20
+                    countable = decided and vis >= 0.5 and n_frames - settle_at >= 12
+                    if countable and armed and angle > 75:
                         reps, armed = reps + 1, False
                     elif angle < 35:
                         armed = True
@@ -344,13 +398,10 @@ def main():
             fps_s = 0.9 * fps_s + 0.1 / max(1e-6, now - t_prev)
             t_prev = now
 
-            h, w = frame.shape[:2]
-            if show_panel:
-                pw = int(w * 0.46)
-                canvas = np.hstack([frame, trace_panel(pw, h, hist, angle, reps, vis, side, paused)])
-            else:
-                canvas = frame
-            text(canvas, f"{fps_s:4.0f} fps", (12, h - 14), 0.5, WHITE, 1)
+            canvas = compose(frame, (hist, angle, reps, vis, side, paused),
+                             WIN, show_panel, args.panel)
+            ch = canvas.shape[0]
+            text(canvas, f"{fps_s:4.0f} fps", (14, ch - 16), 0.5, WHITE, 1)
 
             cv2.imshow(WIN, canvas)
             k = cv2.waitKey(1) & 0xFF
@@ -362,13 +413,16 @@ def main():
                 full = not full
                 cv2.setWindowProperty(WIN, cv2.WND_PROP_FULLSCREEN,
                                       cv2.WINDOW_FULLSCREEN if full else cv2.WINDOW_NORMAL)
+                if not full:
+                    cv2.resizeWindow(WIN, 1600, 760)
+                cv2.waitKey(80)          # let the window manager finish resizing
             elif k == ord("s"):
                 shots += 1
                 name = f"live_shot_{shots:02d}.png"
                 cv2.imwrite(name, canvas)
                 print(f"  saved {name}")
             elif k == ord("r"):
-                hist.clear(); reps, armed = 0, True
+                hist.clear(); reps, armed = 0, True; vis_r.clear(); vis_l.clear()
             elif k == ord("m"):
                 mirror = not mirror
             elif k == ord("h"):
