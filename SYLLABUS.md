@@ -1,14 +1,14 @@
 # PES 517 — Artificial Intelligence Applications in Sport
 
 **Middle East Technical University · Faculty of Education · Department of Physical Education and Sports**
-Elective (MS/PhD) · Fall 2026‑2027
+Elective · open to undergraduate and graduate students · Fall 2026‑2027
 
 | | |
 |---|---|
-| **Course code** | PES 517 (proposed — 517 is currently unused in the PES 5XX series) |
+| **Course code** | PES 517 (proposed) — **see the note on dual-level numbering below** |
 | **Credits** | 3 (2‑2) — 2 h lecture + 2 h computer lab per week |
 | **ECTS** | 8.0 *(confirm with the department; most PES 5XX courses are catalogued at 8.0)* |
-| **Level** | MS and PhD, open to students from other departments |
+| **Level** | Undergraduate and graduate, open to students from other departments |
 | **Language of instruction** | English |
 | **Prerequisites** | None. No programming or mathematics background is assumed. |
 | **Class size** | 20 (cap recommended — lab-based) |
@@ -19,13 +19,15 @@ Elective (MS/PhD) · Fall 2026‑2027
 
 ---
 
+> **A note on the course code.** PES 517 sits in the PES 5XX series, which is the graduate series. A course taken by both undergraduate and graduate students normally needs either dual numbering — an undergraduate code and a graduate code for the same meetings, such as PES 4XX / PES 5XX — or registration under an undergraduate code with graduate credit arranged separately. **Confirm the mechanism with the department and the Registrar before the catalogue entry is submitted.** Everything else in this package works unchanged under either arrangement; only the code and the catalogue entry depend on it.
+
 ## 1. Catalogue description
 
 A practice-oriented introduction to artificial intelligence for sport science professionals. The course covers the conceptual foundations of artificial intelligence, machine learning and large language models, and then applies them to real problems in performance analysis, athlete monitoring, injury risk, biomechanics, tactical analysis and sport organisations. Students work every week in Google Colab notebooks that are supplied pre-written, so that no prior programming experience is required. Emphasis is placed on correct interpretation, honest model evaluation, and the ethical and legal handling of athlete data, rather than on algorithm implementation. Assessment is by weekly laboratory submissions, article critiques, a midterm examination and a team term project.
 
 ## 2. Rationale and positioning
 
-Sport science graduates are now routinely asked to buy, evaluate, supervise or defend AI systems: markerless motion capture, injury-risk dashboards, tracking providers, automated video tagging, LLM-generated training plans. Very few of them will ever build such a system, and almost none need to. What they do need is the ability to **judge** one — to know what the model was trained on, whether the reported accuracy is real, what it will do when it fails, and who is accountable for the athlete's data.
+Sport science students and graduates are now routinely asked to buy, evaluate, supervise or defend AI systems: markerless motion capture, injury-risk dashboards, tracking providers, automated video tagging, LLM-generated training plans. Very few of them will ever build such a system, and almost none need to. What they do need is the ability to **judge** one — to know what the model was trained on, whether the reported accuracy is real, what it will do when it fails, and who is accountable for the athlete's data.
 
 This course is therefore deliberately **problem-first and tool-assisted**, not algorithm-first and code-first. Students run and modify working code; they do not write software from scratch. The intellectual work assessed is framing, evaluation, interpretation and critique.
 
@@ -91,6 +93,20 @@ On successful completion, a student will be able to:
 | Participation and lab engagement | **5%** | In-class discussion, peer help, project peer review. |
 
 **Passing:** overall ≥ 60/100 **and** at least 8 of 12 labs submitted. Letter grades per METU regulations.
+
+### What differs between undergraduate and graduate students
+
+The weights above are identical for both. What differs is the depth required of two components, so that the same course is neither too shallow for a PhD student nor unreachable for a third-year undergraduate.
+
+| | Undergraduate | Graduate |
+|---|---|---|
+| **Weekly labs** | Identical | Identical |
+| **Midterm** | Same paper, same marking | Same paper, same marking |
+| **Article critiques** (10%) | **One** critique, worth 10%, of a paper selected from a supplied list — reviews and clearly-written applied studies | **Two** critiques, 5% each. The second must be a **primary research study** the student finds themselves, and must identify a specific methodological weakness |
+| **Term project** (35%) | Report of **2000 words**. An open dataset from the course catalogue is the expected route | Report of **3000 words**, with an additional section positioning the work against **at least three published studies** |
+| **Participation** | Identical | Identical |
+
+Everything else — the laboratory sessions, the project brief, the rubric criteria and the weightings — is the same for everyone. Graduate students are not given more work for its own sake; they are asked for the two things a graduate course has to demand, which are engagement with primary literature and awareness of where their own work sits within it.
 
 Full rubrics, the project brief and the exam blueprint are in `04-assessment-and-rubrics.md`.
 

@@ -1,7 +1,7 @@
 # PES 517 — Artificial Intelligence Applications in Sport
 
 **Middle East Technical University · Department of Physical Education and Sports**
-elective · laboratory notebooks
+elective, undergraduate and graduate · laboratory notebooks
 
 ---
 
@@ -67,6 +67,8 @@ The clips are CC BY / CC BY-SA. If you use them in a presentation, name the crea
 ## The syllabus
 
 **[SYLLABUS.md](SYLLABUS.md)** — learning outcomes, the fourteen-week schedule, assessment weights, the policy on using AI tools, required software, and the research-ethics route for term projects.
+
+The course is taken by both undergraduate and graduate students. The weights are the same for everyone; graduate students are asked for a second article critique and a longer project report that positions the work against published studies. Everything else — the laboratories, the midterm, the project brief — is identical.
 
 ---
 
