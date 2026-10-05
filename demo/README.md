@@ -26,7 +26,7 @@ python3 run_demo.py clips/squat_frontal_raise.mp4 --crop
 | **`out/`** | All four clips already processed — three files each, plus `RESULTS.txt` |
 | **`FILMING.md`** | How to film your own, and the consent to get first |
 | **`VIDEO-SOURCES.md`** | What each clip is, measured tracking quality, and which to use |
-| **`demo_pose_live.ipynb`** | The same thing in Google Colab, if you would rather not install anything |
+| **`demo_pose_live.ipynb`** | The same thing in Google Colab — [open it](https://colab.research.google.com/github/galipaydin/pes517/blob/main/demo/demo_pose_live.ipynb). Downloads the clips from the public repo, so nothing needs uploading |
 
 ---
 
