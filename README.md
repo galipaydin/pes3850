@@ -68,7 +68,7 @@ The clips are CC BY / CC BY-SA. If you use them in a presentation, name the crea
 
 **[SYLLABUS.md](SYLLABUS.md)** — learning outcomes, the fourteen-week schedule, assessment weights, the policy on using AI tools, required software, and the research-ethics route for term projects.
 
-The course is taken by both undergraduate and graduate students. The weights are the same for everyone; graduate students are asked for a second article critique and a longer project report that positions the work against published studies. Everything else — the laboratories, the midterm, the project brief — is identical.
+The course is taken by both undergraduate and graduate students. The weights and the requirements are the same for everyone, with one exception: graduate project reports are 3000 words and include a section positioning the work against published studies, against 2000 words for undergraduates.
 
 ---
 

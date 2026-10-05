@@ -96,17 +96,17 @@ On successful completion, a student will be able to:
 
 ### What differs between undergraduate and graduate students
 
-The weights above are identical for both. What differs is the depth required of two components, so that the same course is neither too shallow for a PhD student nor unreachable for a third-year undergraduate.
+The weights above are identical for both, and so is almost everything else. **One** component differs.
 
 | | Undergraduate | Graduate |
 |---|---|---|
 | **Weekly labs** | Identical | Identical |
 | **Midterm** | Same paper, same marking | Same paper, same marking |
-| **Article critiques** (10%) | **One** critique, worth 10%, of a paper selected from a supplied list — reviews and clearly-written applied studies | **Two** critiques, 5% each. The second must be a **primary research study** the student finds themselves, and must identify a specific methodological weakness |
-| **Term project** (35%) | Report of **2000 words**. An open dataset from the course catalogue is the expected route | Report of **3000 words**, with an additional section positioning the work against **at least three published studies** |
+| **Article critiques** | Identical — two critiques, 5% each | Identical |
+| **Term project** (35%) | Report of **2000 words** | Report of **3000 words**, with an additional section positioning the work against **at least three published studies** |
 | **Participation** | Identical | Identical |
 
-Everything else — the laboratory sessions, the project brief, the rubric criteria and the weightings — is the same for everyone. Graduate students are not given more work for its own sake; they are asked for the two things a graduate course has to demand, which are engagement with primary literature and awareness of where their own work sits within it.
+Everything else — the laboratory sessions, the article critiques, the project brief, the rubric criteria and the weightings — is the same for everyone. Graduate students are not given more work for its own sake; they are asked for the one thing a graduate course has to demand, which is awareness of where their own work sits in the published literature.
 
 Full rubrics, the project brief and the exam blueprint are in `04-assessment-and-rubrics.md`.
 
