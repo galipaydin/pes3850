@@ -1,0 +1,56 @@
+=============================================================================
+PES 517 · Week 1 demo — all clips processed
+=============================================================================
+generated : 2026-10-05 18:03
+command   : python3 run_demo.py clips/<clip>.mp4 --crop
+python    : 3.11.11
+mediapipe : 0.10.18
+opencv    : 4.11.0
+model     : pose_landmarker_full.task (MediaPipe Tasks API)
+
+-----------------------------------------------------------------------------
+ sports2d_demo
+-----------------------------------------------------------------------------
+  source   : 1768x994, 7.7s, 30 fps
+  prepared : 1280x720, 7.7s  -> clip_prepared.mp4
+  side     : right  (visibility right 0.85 · left 0.69)
+  landmarks: 96% of frames · median confidence 0.92 (foot 0.92)
+  knee     : peak 105° · range 103° · 3 reps detected
+
+-----------------------------------------------------------------------------
+ squat_demo
+-----------------------------------------------------------------------------
+  source   : 1280x720, 7.1s, 30 fps
+  crop     : 630x720 from 1280x720  (49% of the frame)
+  side     : right  (visibility right 0.67 · left 0.48)
+  landmarks: 100% of frames · median confidence 0.78 (foot 0.66)
+  knee     : peak 133° · range 133° · 2 reps detected
+
+-----------------------------------------------------------------------------
+ squat_frontal_raise
+-----------------------------------------------------------------------------
+  source   : 640x480, 28.2s, 30 fps
+  prepared : 960x720, 12.0s  -> clip_prepared.mp4
+  crop     : 462x530 from 960x720  (35% of the frame)
+  side     : left  (visibility right 0.43 · left 0.91)
+  landmarks: 100% of frames · median confidence 0.94 (foot 0.94)
+  knee     : peak 141° · range 134° · 3 reps detected
+
+-----------------------------------------------------------------------------
+ squat_single_leg
+-----------------------------------------------------------------------------
+  source   : 480x640, 7.8s, 30 fps
+  crop     : 258x334 from 480x640  (28% of the frame)
+  side     : left  (visibility right 0.80 · left 0.98)
+  landmarks: 100% of frames · median confidence 0.99 (foot 0.99)
+  knee     : peak 115° · range 49° · 1 reps detected
+
+-----------------------------------------------------------------------------
+ RANKED BY TRACKING QUALITY
+-----------------------------------------------------------------------------
+                   clip  side found  vis foot_vis peak  rom  reps score
+   squat_single_leg.mp4  left  100% 0.99     0.99 124°  56°     1 0.981
+squat_frontal_raise.mp4  left  100% 0.94     0.94 143° 138°     3 0.891
+      sports2d_demo.mp4 right   96% 0.92     0.92 105° 103°     3 0.811
+         squat_demo.mp4 right  100% 0.90     0.78 137° 137°     2 0.701
+

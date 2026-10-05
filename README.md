@@ -30,6 +30,36 @@ Week 8 is the midterm and the project workshop; Week 14 is presentations. Neithe
 
 ---
 
+## The opening demonstration — pose estimation
+
+The first session opens with a computer finding a person's hip, knee and ankle in every frame of an ordinary video, and turning it into a knee-angle curve. You can run it yourself:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/demo/demo_pose_live.ipynb)
+
+Four clips ship with it, so it works immediately — or upload your own video of a squat. By Week 10 you will do exactly this with your own footage, and then measure how wrong it is against a manual reference.
+
+```
+demo/
+├── demo_pose_live.ipynb   the notebook above
+├── run_demo.py            the same thing from one command line, for local use
+├── clips/                 four freely-licensed clips, attributed in VIDEO-SOURCES.md
+├── out/                   the figures, already generated
+├── FILMING.md             how to film your own: angle, framing, length, consent
+└── VIDEO-SOURCES.md       what each clip is, and how well each one tracked
+```
+
+**Measured on `squat_frontal_raise.mp4`:** landmarks found in 100% of frames, median confidence 0.94, three repetitions, 134° range of motion. Full results in `demo/out/RESULTS.txt`.
+
+The clips are CC BY / CC BY-SA. If you use them in a presentation, name the creator — the attributions are in `VIDEO-SOURCES.md`.
+
+---
+
+## The syllabus
+
+**[SYLLABUS.md](SYLLABUS.md)** — learning outcomes, the fourteen-week schedule, assessment weights, the policy on using AI tools, required software, and the research-ethics route for term projects.
+
+---
+
 ## About these notebooks
 
 **No programming experience is required.** Every notebook is written for you. You change values in cells marked ✏️ **EDIT ME**, run them, and explain what came out. The explanation is what is graded, not the code.
