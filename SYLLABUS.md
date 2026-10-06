@@ -1,13 +1,13 @@
-# PES 517 — Artificial Intelligence Applications in Sport
+# PES 3850 — Artificial Intelligence Applications in Sport
 
 **Middle East Technical University · Faculty of Education · Department of Physical Education and Sports**
 Elective · open to undergraduate and graduate students · Fall 2026‑2027
 
 | | |
 |---|---|
-| **Course code** | PES 517 (proposed) — **see the note on dual-level numbering below** |
+| **Course code** | PES 3850 (proposed) — **see the note on graduate credit below** |
 | **Credits** | 3 (2‑2) — 2 h lecture + 2 h computer lab per week |
-| **ECTS** | 8.0 *(confirm with the department; most PES 5XX courses are catalogued at 8.0)* |
+| **ECTS** | *(confirm with the department — the value follows the undergraduate catalogue for a 3XXX course, not the 8.0 typical of the PES 5XX graduate series)* |
 | **Level** | Undergraduate and graduate, open to students from other departments |
 | **Language of instruction** | English |
 | **Prerequisites** | None. No programming or mathematics background is assumed. |
@@ -19,7 +19,7 @@ Elective · open to undergraduate and graduate students · Fall 2026‑2027
 
 ---
 
-> **A note on the course code.** PES 517 sits in the PES 5XX series, which is the graduate series. A course taken by both undergraduate and graduate students normally needs either dual numbering — an undergraduate code and a graduate code for the same meetings, such as PES 4XX / PES 5XX — or registration under an undergraduate code with graduate credit arranged separately. **Confirm the mechanism with the department and the Registrar before the catalogue entry is submitted.** Everything else in this package works unchanged under either arrangement; only the code and the catalogue entry depend on it.
+> **A note on the course code.** PES 3850 is an undergraduate code. The course is open to graduate students as well, and a graduate student's registration in a 3XXX course does not by itself carry graduate credit — that normally needs the advisor's and the Graduate School's approval, and in some programmes such a course counts only towards a minimum-requirement or non-credit load. **Settle with the department and the Registrar how graduate students register and what credit they receive, before the catalogue entry is submitted.** Everything else in this package works unchanged under either arrangement; only the code, the ECTS value and the catalogue entry depend on it.
 
 ## 1. Catalogue description
 

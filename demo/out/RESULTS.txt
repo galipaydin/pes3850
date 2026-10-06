@@ -1,5 +1,5 @@
 =============================================================================
-PES 517 · Week 1 demo — all clips processed
+PES 3850 · Week 1 demo — all clips processed
 =============================================================================
 generated : 2026-10-05 18:03
 command   : python3 run_demo.py clips/<clip>.mp4 --crop

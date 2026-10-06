@@ -1,4 +1,4 @@
-# PES 517 — Artificial Intelligence Applications in Sport
+# PES 3850 — Artificial Intelligence Applications in Sport
 
 **Middle East Technical University · Department of Physical Education and Sports**
 elective, undergraduate and graduate · laboratory notebooks
@@ -13,18 +13,18 @@ Click a badge. The notebook opens in Google Colab — nothing to install, no acc
 
 | Week | Lab | |
 |---|---|---|
-| 1 | Welcome to Google Colab | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab01_colab_onboarding.ipynb) |
-| 2 | Prompt-to-notebook: make an LLM write your analysis | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab02_prompt_to_notebook.ipynb) |
-| 3 | Clean it, describe it, plot it | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab03_data_literacy.ipynb) |
-| 4 | Your first supervised model | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab04_first_supervised_model.ipynb) |
-| 5 | Build a leaky model, then fix it | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab05_data_leakage.ipynb) |
-| 6 | An injury-risk classifier, honestly | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab06_injury_risk_classifier.ipynb) |
-| 7 | Athlete phenotypes | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab07_athlete_phenotypes.ipynb) |
-| 9 | Classify your own movement | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab08_wearables_activity_recognition.ipynb) |
-| 10 | Your video, your joint angles | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab09_pose_estimation.ipynb) |
-| 11 | Tracking and event data | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab10_tracking_and_event_data.ipynb) |
-| 12 | A grounded assistant | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab11_grounded_assistant.ipynb) |
-| 13 | Audit a real product | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/notebooks/lab12_product_audit.ipynb) |
+| 1 | Welcome to Google Colab | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab01_colab_onboarding.ipynb) |
+| 2 | Prompt-to-notebook: make an LLM write your analysis | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab02_prompt_to_notebook.ipynb) |
+| 3 | Clean it, describe it, plot it | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab03_data_literacy.ipynb) |
+| 4 | Your first supervised model | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab04_first_supervised_model.ipynb) |
+| 5 | Build a leaky model, then fix it | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab05_data_leakage.ipynb) |
+| 6 | An injury-risk classifier, honestly | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab06_injury_risk_classifier.ipynb) |
+| 7 | Athlete phenotypes | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab07_athlete_phenotypes.ipynb) |
+| 9 | Classify your own movement | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab08_wearables_activity_recognition.ipynb) |
+| 10 | Your video, your joint angles | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab09_pose_estimation.ipynb) |
+| 11 | Tracking and event data | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab10_tracking_and_event_data.ipynb) |
+| 12 | A grounded assistant | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab11_grounded_assistant.ipynb) |
+| 13 | Audit a real product | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab12_product_audit.ipynb) |
 
 ---
 
@@ -32,7 +32,7 @@ Click a badge. The notebook opens in Google Colab — nothing to install, no acc
 
 The first session opens with a computer finding a person's hip, knee and ankle in every frame of an ordinary video, and turning it into a knee-angle curve. You can run it yourself:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/demo/demo_pose_live.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/demo/demo_pose_live.ipynb)
 
 Four clips ship with it, so it works immediately — or upload your own video of a squat. By Week 10 you will do exactly this with your own footage, and then measure how wrong it is against a manual reference.
 
@@ -110,4 +110,4 @@ You remain responsible for every claim in your work. A fabricated citation is tr
 
 ---
 
-*Course materials for PES 517. Questions: gaydin@firat.edu.tr*
+*Course materials for PES 3850. Questions: gaydin@firat.edu.tr*

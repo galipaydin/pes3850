@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PES 517 · Week 1 — pose estimation from a video clip.
+PES 3850 · Week 1 — pose estimation from a video clip.
 
 Produces three files:
     <out>/demo_side_by_side.png   one frame, raw | skeleton

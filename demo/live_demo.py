@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PES 517 · Week 1 — live pose estimation from a webcam.
+PES 3850 · Week 1 — live pose estimation from a webcam.
 
 A full-screen window: the skeleton on the left, a scrolling knee-angle trace on
 the right, a large angle readout and a repetition counter.
@@ -51,7 +51,7 @@ PAPER  = (249, 251, 252)
 GREY   = (120, 112, 108)
 WHITE  = (255, 255, 255)
 
-WIN = "PES 517 — live pose estimation"
+WIN = "PES 3850 — live pose estimation"
 
 
 def fetch_model(size: str) -> Path:
@@ -308,7 +308,7 @@ def open_source(args):
 
 
 def check(args) -> int:
-    print("PES 517 live demo — pre-flight\n")
+    print("PES 3850 live demo — pre-flight\n")
     ok = True
 
     print(f"  python     {sys.version.split()[0]}")

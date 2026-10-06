@@ -6,7 +6,7 @@ A computer finds a person's hip, knee and ankle in every frame of an ordinary vi
 
 ## Run it in Colab
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes517/blob/main/demo/demo_pose_live.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/demo/demo_pose_live.ipynb)
 
 Nothing to install. Four clips come with it, so it works straight away — or upload your own.
 
