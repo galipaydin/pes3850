@@ -158,9 +158,9 @@ def trace_panel(w, h, hist, angle, reps, vis, side, paused):
     text(p, "last 10 seconds", (gx0, gy1 + int(26*s)), 0.46 * s, GREY, 1, shadow=False)
 
     # shrink the key hint until it fits the panel, and drop items if it still will not
-    for hint in ("SPACE freeze | f full | s save | r reset | l leg | p panel | h keys | q quit",
-                 "SPACE freeze | f full | s save | r reset | h keys | q quit",
-                 "SPACE freeze | f full | q quit",
+    for hint in ("SPACE freeze | f big | s save | r reset | l leg | p panel | h keys | q quit",
+                 "SPACE freeze | f big | s save | r reset | h keys | q quit",
+                 "SPACE freeze | f big | q quit",
                  "SPACE freeze | q quit"):
         hs = 0.40 * s
         (hw, _), _ = cv2.getTextSize(hint, cv2.FONT_HERSHEY_SIMPLEX, hs, 1)
@@ -197,6 +197,28 @@ def screen_size():
     return _SCREEN
 
 
+MENUBAR = 38          # macOS menu bar; the window cannot draw under it
+
+
+def maximise(win, on: bool):
+    """Grow the window to fill the screen, WITHOUT OpenCV's full-screen property.
+
+    cv2.setWindowProperty(..., WND_PROP_FULLSCREEN, ...) is what produced the grey
+    band at the top on macOS: the window went full screen but the image was not
+    scaled to match, leaving the unpainted remainder visible. An ordinary resized
+    and moved window has no such problem, and the user keeps their menu bar."""
+    sw, sh = screen_size()
+    try:
+        if on:
+            cv2.moveWindow(win, 0, MENUBAR)
+            cv2.resizeWindow(win, sw, sh - MENUBAR)
+        else:
+            cv2.resizeWindow(win, 1600, 760)
+            cv2.moveWindow(win, max(0, (sw - 1600) // 2), max(MENUBAR, (sh - 760) // 2))
+    except Exception as e:
+        print(f"  could not resize the window: {e}")
+
+
 def window_size(win, full=False, fallback=(1600, 760)):
     """The window's real drawable area, asked of OpenCV.
 
@@ -225,7 +247,7 @@ def fill(frame, tw, th):
     return r[y0:y0 + th, x0:x0 + tw]
 
 
-HELP = [("SPACE", "freeze / unfreeze"), ("f", "full screen"),
+HELP = [("SPACE", "freeze / unfreeze"), ("f", "big window"),
         ("s", "save a screenshot"), ("r", "reset trace and reps"),
         ("l", "switch leg"), ("m", "mirror"),
         ("p", "hide / show the panel"), ("h", "this list"), ("q", "quit")]
@@ -377,15 +399,15 @@ def probe():
     except Exception as e:
         print(f"  window rect, windowed  FAILED: {e}")
 
-    cv2.setWindowProperty(WIN, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+    maximise(WIN, True)
     for _ in range(14):
         cv2.imshow(WIN, frame); cv2.waitKey(30)
     try:
         r = cv2.getWindowImageRect(WIN)
-        print(f"  window rect, FULL     {r}")
+        print(f"  window rect, BIG      {r}")
         fw, fh = r[2], r[3]
     except Exception as e:
-        print(f"  window rect, FULL      FAILED: {e}"); fw, fh = sw, sh
+        print(f"  window rect, BIG       FAILED: {e}"); fw, fh = sw, sh - MENUBAR
 
     # draw a canvas at exactly that size, with corner markers, and hold it
     probe_img = _np.full((fh, fw, 3), (40, 40, 44), _np.uint8)
@@ -567,14 +589,11 @@ def main():
                 paused = not paused
             elif k == ord("f"):
                 full = not full
-                cv2.setWindowProperty(WIN, cv2.WND_PROP_FULLSCREEN,
-                                      cv2.WINDOW_FULLSCREEN if full else cv2.WINDOW_NORMAL)
-                if not full:
-                    cv2.resizeWindow(WIN, 1600, 760)
-                for _ in range(6):       # let the window manager finish resizing
+                maximise(WIN, full)
+                for _ in range(5):       # let the window manager finish resizing
                     cv2.waitKey(30)
                 mw, mh = window_size(WIN, full)
-                print(f"  {'full screen' if full else 'windowed'}: drawing at {mw}x{mh}")
+                print(f"  {'big' if full else 'windowed'}: drawing at {mw}x{mh}")
             elif k == ord("s"):
                 shots += 1
                 name = f"live_shot_{shots:02d}.png"
