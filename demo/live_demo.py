@@ -21,7 +21,7 @@ Run  python3 live_demo.py --check  first. On macOS the first run triggers a
 camera permission prompt, which is easier to deal with before you need it.
 """
 from __future__ import annotations
-import argparse, sys, time
+import argparse, subprocess, sys, time
 from collections import deque
 from pathlib import Path
 
@@ -179,42 +179,50 @@ _SCREEN = None
 
 
 def screen_size():
-    """Logical screen size, asked of the OS once. Used for the full-screen canvas.
+    """Logical screen size, measured once, in a SUBPROCESS.
 
-    Deliberately NOT derived from the window: the window's image area depends on
-    the image we last gave it, so reading it back to decide the next image size
-    is circular and settles on the wrong value."""
+    Creating a tkinter root in this process aborts the whole program once an
+    OpenCV window exists — two GUI toolkits cannot both own the macOS main
+    thread, and the failure is an NSException that Python cannot catch:
+
+        libc++abi: terminating due to uncaught exception of type NSException
+
+    A subprocess cannot take this process down with it."""
     global _SCREEN
     if _SCREEN is not None:
         return _SCREEN
+    _SCREEN = (1920, 1080)
     try:
-        import tkinter
-        r = tkinter.Tk(); r.withdraw()
-        _SCREEN = (r.winfo_screenwidth(), r.winfo_screenheight())
-        r.destroy()
-    except Exception:
-        _SCREEN = (1920, 1080)
+        out = subprocess.run(
+            [sys.executable, "-c",
+             "import tkinter;r=tkinter.Tk();r.withdraw();"
+             "print(r.winfo_screenwidth(),r.winfo_screenheight())"],
+            capture_output=True, text=True, timeout=10)
+        w, h = out.stdout.split()
+        _SCREEN = (int(w), int(h))
+    except Exception as e:
+        print(f"  could not read the screen size ({type(e).__name__}); "
+              f"assuming {_SCREEN[0]}x{_SCREEN[1]}")
     return _SCREEN
-
-
-MENUBAR = 38          # macOS menu bar; the window cannot draw under it
 
 
 def maximise(win, on: bool):
     """Grow the window to fill the screen, WITHOUT OpenCV's full-screen property.
 
     cv2.setWindowProperty(..., WND_PROP_FULLSCREEN, ...) is what produced the grey
-    band at the top on macOS: the window went full screen but the image was not
-    scaled to match, leaving the unpainted remainder visible. An ordinary resized
-    and moved window has no such problem, and the user keeps their menu bar."""
-    sw, sh = screen_size()
+    band on macOS: the window went full screen but the image was not scaled to
+    match, so whatever the canvas did not cover stayed unpainted.
+
+    No display measurement is needed. Asking for a window larger than any screen
+    makes the window manager clamp it to what genuinely fits, menu bar and dock
+    excluded, and the next window_size() reads back the honest answer."""
     try:
         if on:
-            cv2.moveWindow(win, 0, MENUBAR)
-            cv2.resizeWindow(win, sw, sh - MENUBAR)
+            cv2.moveWindow(win, 0, 0)
+            cv2.resizeWindow(win, 20000, 20000)
         else:
             cv2.resizeWindow(win, 1600, 760)
-            cv2.moveWindow(win, max(0, (sw - 1600) // 2), max(MENUBAR, (sh - 760) // 2))
+            cv2.moveWindow(win, 120, 120)
     except Exception as e:
         print(f"  could not resize the window: {e}")
 
@@ -228,7 +236,11 @@ def window_size(win, full=False, fallback=(1600, 760)):
     try:
         x, y, w, h = cv2.getWindowImageRect(win)
         if w > 80 and h > 80:
-            return w, h
+            # maximise() asks for a window larger than any screen and relies on the
+            # window manager to clamp it. Never trust that blindly: an unclamped
+            # 20000x20000 canvas is over a gigabyte and would take the demo down.
+            sw, sh = screen_size()
+            return min(w, sw, 4096), min(h, sh, 2304)
     except Exception:
         pass
     return screen_size() if full else fallback
@@ -407,7 +419,7 @@ def probe():
         print(f"  window rect, BIG      {r}")
         fw, fh = r[2], r[3]
     except Exception as e:
-        print(f"  window rect, BIG       FAILED: {e}"); fw, fh = sw, sh - MENUBAR
+        print(f"  window rect, BIG       FAILED: {e}"); fw, fh = sw, sh
 
     # draw a canvas at exactly that size, with corner markers, and hold it
     probe_img = _np.full((fh, fw, 3), (40, 40, 44), _np.uint8)
@@ -452,6 +464,7 @@ def main():
     if args.check:
         sys.exit(check(args))
 
+    screen_size()                      # measure once, before any window exists
     model = fetch_model(args.model)
     cap, label, is_file = open_source(args)
     if not cap.isOpened():
