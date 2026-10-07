@@ -62,6 +62,19 @@ The clips are CC BY / CC BY-SA. If you use one in a presentation, carry the cred
 
 ---
 
+## Lecture slides
+
+[`lectures/`](lectures) holds a folder per week. Each week's deck goes up around
+the session; a week whose folder has only a README has not had its slides
+published yet.
+
+GitHub will not preview a `.pptx` in the browser — click the file, then
+**Download**, and open it in PowerPoint, Keynote, or Google Slides.
+
+| Week | |
+|---|---|
+| 1 | [What AI actually is, and where it sits in sport](lectures/week01) |
+
 ## The syllabus
 
 **[SYLLABUS.md](SYLLABUS.md)** — learning outcomes, the fourteen-week schedule, assessment weights, the policy on using AI tools, required software, and the research-ethics route for term projects.
