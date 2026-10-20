@@ -77,6 +77,7 @@ GitHub will not preview a `.pptx` in the browser — click the file, then
 | Week | |
 |---|---|
 | 1 | [What AI actually is, and where it sits in sport](lectures/week01) |
+| 3 | [Sport data literacy](lectures/week03) |
 
 ## The syllabus
 
