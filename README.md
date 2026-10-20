@@ -11,11 +11,14 @@ Click a badge. The notebook opens in Google Colab — nothing to install, no acc
 
 **Before you edit anything: `File → Save a copy in Drive`.** Otherwise your work is not saved.
 
+**Stuck on a word?** Every technical term in the course is explained in plain language in the
+[glossary](GLOSSARY.md), with the week it first appears. Keep it open in another tab during the labs.
+
 | Week | Lab | |
 |---|---|---|
 | 1 | Welcome to Google Colab | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab01_colab_onboarding.ipynb) |
 | 2 | Prompt-to-notebook: make an LLM write your analysis | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab02_prompt_to_notebook.ipynb) |
-| 3 | Clean it, describe it, plot it | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab03_data_literacy.ipynb) |
+| 3 | From four files to one table | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab03_data_literacy.ipynb) |
 | 4 | Your first supervised model | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab04_first_supervised_model.ipynb) |
 | 5 | Build a leaky model, then fix it | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab05_data_leakage.ipynb) |
 | 6 | An injury-risk classifier, honestly | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab06_injury_risk_classifier.ipynb) |
