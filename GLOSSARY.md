@@ -204,6 +204,8 @@ You will never implement any of these. You will run them and choose between them
 
 **Temperature** *(Week 2)* — the dial from predictable to inventive.
 
+**Embedding** *(Week 2)* — the list of numbers a language model uses to represent a word or a sentence. Words used in similar ways get similar numbers, which is how a model treats *sprint* and *run* as related. You can see them on the [links page](LINKS.md).
+
 **Prompt** *(Week 2)* — what you send it. Role, task, context, format, constraints.
 
 **Schema** *(Week 2)* — the structure of your data: the column names and what they contain. **Give it your schema, not a description.**

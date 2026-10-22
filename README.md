@@ -14,6 +14,9 @@ Click a badge. The notebook opens in Google Colab — nothing to install, no acc
 **Stuck on a word?** Every technical term in the course is explained in plain language in the
 [glossary](GLOSSARY.md), with the week it first appears. Keep it open in another tab during the labs.
 
+**Interactive pages** that go with the lectures — a language model you can watch working, embeddings
+you can play with — are on the [links page](LINKS.md), each with one thing to try.
+
 | Week | Lab | |
 |---|---|---|
 | 1 | Welcome to Google Colab | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/galipaydin/pes3850/blob/main/notebooks/lab01_colab_onboarding.ipynb) |
