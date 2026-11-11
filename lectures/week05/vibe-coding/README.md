@@ -11,6 +11,9 @@ starts in a new conversation with the agent in **Planning** mode.
 | 3 | [plan-prompt.md](plan-prompt.md) | The MVP split into small, testable tasks: `docs/PLAN.md` |
 | 4 | [rules-prompt.md](rules-prompt.md) | The rules every agent must follow in your project: `AGENTS.md` |
 
+Worked example: what the agent wrote for the course project in steps 1–3:
+[PRD.md](PRD.md), [DESIGN.md](DESIGN.md) and [PLAN.md](PLAN.md).
+
 [Slides](pes3850-week05-vibe-coding.pptx) — download to open in PowerPoint or Keynote;
 GitHub cannot preview a .pptx in the browser.
 
